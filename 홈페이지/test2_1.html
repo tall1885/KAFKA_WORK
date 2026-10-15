@@ -1,0 +1,167 @@
+<!-- =================================================================
+     OpasNet Solution: Confluent (sub02_03_10.php)
+================================================================== -->
+<style>
+/* OpasNet Sub-Tab Navigation Style */
+.op-sub-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+    padding: 15px 0 25px;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 40px;
+    font-size: 15px;
+}
+.op-sub-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4b5563;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+.op-sub-nav a::before {
+    content: "■";
+    font-size: 10px;
+    color: #dc2626;
+}
+.op-sub-nav a.active {
+    color: #dc2626;
+    font-weight: 700;
+    border-bottom: 2px solid #dc2626;
+    padding-bottom: 2px;
+}
+.op-sub-nav a:hover {
+    color: #dc2626;
+}
+
+/* Base Layout */
+.op-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px 80px;
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+.op-hero-banner {
+    background: linear-gradient(135deg, #1f1a3a 0%, #3b1d6e 100%);
+    border-radius: 12px;
+    padding: 50px 40px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+.op-hero-banner h1 { font-size: 32px; font-weight: 700; margin: 0 0 12px; }
+.op-hero-banner p { font-size: 16px; color: #d8b4fe; margin: 0; }
+
+.op-sec-title { margin: 40px 0 20px; font-size: 22px; font-weight: 700; color: #111; }
+.op-diagram-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 25px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13.5px;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.45;
+}
+.op-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 40px;
+}
+.op-spec-table th, .op-spec-table td {
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+}
+.op-spec-table th { background: #f9fafb; font-weight: 700; }
+</style>
+
+<div class="op-page-container">
+    <!-- 상단 탭 메뉴 (이미지 양식 반영) -->
+    <nav class="op-sub-nav">
+        <a href="sub02_03_10.php" class="active">Confluent</a>
+        <a href="sub02_03_11.php">Splunk</a>
+    </nav>
+
+    <!-- 히어로 배너 -->
+    <header class="op-hero-banner">
+        <h1>Confluent Platform</h1>
+        <p>엔터프라이즈 실시간 이벤트 스트리밍 중추 신경망: 모든 사일로 데이터를 실시간 스트림으로 연결합니다.</p>
+    </header>
+
+    <!-- 1. 핵심 아키텍처 다이어그램 -->
+    <h3 class="op-sec-title">1. Confluent 이벤트 스트리밍 아키텍처</h3>
+    <div class="op-diagram-box">
+[ 다양한 데이터 소스 ]
+  ├── RDBMS / NoSQL (CDC 엔진 연동)
+  ├── 온프레미스 서버 & 로그 수집 에이전트
+  └── 멀티 클라우드 (AWS, Azure, GCP)
+             │
+             ▼ (실시간 고속 인입)
+┌──────────────────────────────────────────────────────────────────┐
+│                    Confluent Platform                            │
+│                                                                  │
+│  [120+ Kafka Connect] ──▶ [분산 Kafka Broker 클러스터]            │
+│    - 무중단 소스 연동        - Multi-Node Topic Replication      │
+│                             - Zero Data Loss 무손실 보장         │
+│                                      │                           │
+│                                      ▼                           │
+│                        [ksqlDB & Flink Stream Processing]        │
+│                         - SQL 기반 실시간 데이터 변환/마스킹       │
+│                         - 실시간 집계 및 이벤트 라우팅            │
+│                                      │                           │
+│     [Schema Registry] <──────────────┴───────────> [Control Center]
+│     - 데이터 포맷 계약 관리                         - 24x7 모니터링
+└──────────────────────────────────────┬───────────────────────────┘
+                                       │
+                                       ▼ (타겟 시스템으로 동시 팬아웃)
+[ 타겟 플랫폼 ] ──▶ Splunk(보안/관제), Data Lake(S3/Snowflake), 마이크로서비스
+    </div>
+
+    <!-- 2. 주요 구성요소 및 기능 분류표 -->
+    <h3 class="op-sec-title">2. 핵심 컴포넌트 분류</h3>
+    <table class="op-spec-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">분류</th>
+                <th style="width: 30%;">컴포넌트</th>
+                <th style="width: 45%;">상세 역할 및 특장점</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>데이터 연결 (Connect)</strong></td>
+                <td>Kafka Connect Ecosystem</td>
+                <td>120개 이상의 플러그 앤 플레이 커넥터로 DB 변경사항(CDC), SaaS, ERP와 무중단 실시간 연계</td>
+            </tr>
+            <tr>
+                <td><strong>실시간 처리 (Stream)</strong></td>
+                <td>ksqlDB &amp; Apache Flink</td>
+                <td>복잡한 Java 코드 없이 친숙한 SQL 문법으로 실시간 필터링, 이상 징후 감지, 스트림 조인 수행</td>
+            </tr>
+            <tr>
+                <td><strong>데이터 신뢰성 (Govern)</strong></td>
+                <td>Confluent Schema Registry</td>
+                <td>Avro, Protobuf, JSON 스키마 유효성을 사전 검증하여 데이터 파이프라인의 일관성 및 무결성 유지</td>
+            </tr>
+            <tr>
+                <td><strong>엔터프라이즈 운영</strong></td>
+                <td>Control Center &amp; Security</td>
+                <td>클러스터 헬스체크, 지연 시간(Latency) 모니터링, 엔터프라이즈 RBAC 및 엔드투엔드 암호화 지원</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 3. 오파스넷 구축 서비스 -->
+    <h3 class="op-sec-title">3. 오파스넷 Confluent 전문 서비스</h3>
+    <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>대규모 클러스터 사이징 &amp; 토폴로지 설계:</strong> 엔터프라이즈 환경에 맞춤화된 멀티 브로커 및 파티션 분산 최적화</li>
+        <li><strong>고가용성 재해 복구(DR) 구성:</strong> Cluster Linking 및 Multi-Region 복제를 통한 비즈니스 연속성 보장</li>
+        <li><strong>원스톱 PoC 및 기술 지원:</strong> 사전 PoC 검증부터 운영자 교육, 24x7 장애 대응 체계 구축</li>
+    </ul>
+</div>

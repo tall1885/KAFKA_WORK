@@ -1,0 +1,167 @@
+<!-- =================================================================
+     OpasNet Solution: Splunk (sub02_03_11.php)
+================================================================== -->
+<style>
+/* OpasNet Sub-Tab Navigation Style (동일 탭 스타일 유지) */
+.op-sub-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+    padding: 15px 0 25px;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 40px;
+    font-size: 15px;
+}
+.op-sub-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4b5563;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+.op-sub-nav a::before {
+    content: "■";
+    font-size: 10px;
+    color: #dc2626;
+}
+.op-sub-nav a.active {
+    color: #dc2626;
+    font-weight: 700;
+    border-bottom: 2px solid #dc2626;
+    padding-bottom: 2px;
+}
+.op-sub-nav a:hover {
+    color: #dc2626;
+}
+
+/* Base Layout */
+.op-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px 80px;
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+.op-hero-banner-splunk {
+    background: linear-gradient(135deg, #1a1a2e 0%, #c2410c 100%);
+    border-radius: 12px;
+    padding: 50px 40px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+.op-hero-banner-splunk h1 { font-size: 32px; font-weight: 700; margin: 0 0 12px; }
+.op-hero-banner-splunk p { font-size: 16px; color: #ffedd5; margin: 0; }
+
+.op-sec-title { margin: 40px 0 20px; font-size: 22px; font-weight: 700; color: #111; }
+.op-diagram-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 25px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 13.5px;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.45;
+}
+.op-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 40px;
+}
+.op-spec-table th, .op-spec-table td {
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+}
+.op-spec-table th { background: #f9fafb; font-weight: 700; }
+</style>
+
+<div class="op-page-container">
+    <!-- 상단 탭 메뉴 (Splunk 활성화) -->
+    <nav class="op-sub-nav">
+        <a href="sub02_03_10.php">Confluent</a>
+        <a href="sub02_03_11.php" class="active">Splunk</a>
+    </nav>
+
+    <!-- 히어로 배너 -->
+    <header class="op-hero-banner-splunk">
+        <h1>Splunk Platform</h1>
+        <p>머신 데이터 인텔리전스의 글로벌 표준: 보안 관제(SIEM), 장애 예측, 풀스택 옵저버빌리티를 단일 플랫폼에서 완성합니다.</p>
+    </header>
+
+    <!-- 1. 분석 파이프라인 시퀀스 흐름도 -->
+    <h3 class="op-sec-title">1. Splunk 실시간 데이터 분석 및 보안 관제 흐름도</h3>
+    <div class="op-diagram-box">
+[ 머신 데이터 발생 ] ──▶ [ Universal Forwarder / HEC ]
+- 네트워크 스위치/라우터     - 무손실 압축 전송 & 암호화 채널
+- OS 보안 로그, WAS 이벤트
+          │
+          ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                    Splunk Indexer Cluster                        │
+│                                                                  │
+│  [파싱 및 타임스탬프 부여] ──▶ [실시간 인덱싱] ──▶ [분산 스토리지 보관] │
+│                                   │                              │
+└───────────────────────────────────┼──────────────────────────────┘
+                                    │ (초고속 SPL 쿼리 연계)
+                                    ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                  Splunk Search Head & 솔루션 계층                 │
+│                                                                  │
+│  ┌──────────────────────┐              ┌──────────────────────┐  │
+│  │ Splunk ES (SIEM)     │              │ Splunk Observability │  │
+│  │ - 실시간 위협 상관분석 │              │ - APM 분산 트레이싱  │  │
+│  │ - 이상 트래픽 자동 탐지│              │ - IT 인프라 헬스 모니터링│ │
+│  └──────────┬───────────┘              └──────────────────────┘  │
+└─────────────┼────────────────────────────────────────────────────┘
+              ▼
+[ Splunk SOAR 자동 대응 ] ──▶ 네트워크 격리, 방화벽 IP 자동 차단, 보안 관제 경보
+    </div>
+
+    <!-- 2. 솔루션 포트폴리오 표 -->
+    <h3 class="op-sec-title">2. Splunk 제품 라인업 및 상세 기능</h3>
+    <table class="op-spec-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">솔루션명</th>
+                <th style="width: 30%;">주요 목적</th>
+                <th style="width: 45%;">핵심 기능 및 기대 효과</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Splunk Enterprise / Cloud</strong></td>
+                <td>머신데이터 통합 플랫폼</td>
+                <td>모든 이기종 비정형 로그를 실시간 수집·인덱싱하여 강력한 검색 언어(SPL)로 데이터 가시화</td>
+            </tr>
+            <tr>
+                <td><strong>Splunk Enterprise Security (ES)</strong></td>
+                <td>차세대 차등화 SIEM</td>
+                <td>위협 인텔리전스 결합 및 머신러닝 기반 상관분석(Correlation Search)을 통해 APT 공격 및 내부자 이상 탐지</td>
+            </tr>
+            <tr>
+                <td><strong>Splunk SOAR</strong></td>
+                <td>보안 오케스트레이션 및 자동화</td>
+                <td>수백 개의 사전 정의된 플레이북을 바탕으로 반복적인 보안 알람 분석 및 침해 차단 업무 자동화</td>
+            </tr>
+            <tr>
+                <td><strong>Splunk Observability Cloud</strong></td>
+                <td>풀스택 ITSI &amp; APM</td>
+                <td>마이크로서비스(MSA) 전 구간의 No-Sample 트랜잭션 추적 및 인프라 지표 모니터링을 통한 MTTR(장애조치시간) 최소화</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 3. 오파스넷 전문 서비스 역량 -->
+    <h3 class="op-sec-title">3. 오파스넷의 Splunk 구축 및 운영 경쟁력</h3>
+    <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>네트워크 전문 인프라와 결합된 보안 관제:</strong> 시스코(Cisco) 등 대규모 네트워크 백본 연계 환경에 최적화된 로그 아키텍처 설계</li>
+        <li><strong>맞춤형 대시보드 및 SPL 최적화 컨설팅:</strong> 기업별 관제 요구조건에 맞춘 커스텀 화면 구축 및 쿼리 튜닝을 통한 라이선스 효율 극대화</li>
+        <li><strong>SIEM &amp; SOAR 턴키 구축:</strong> 보안 정책 수립부터 인덱서 클러스터 이중화 및 사고 대응 플레이북 개발 완벽 지원</li>
+    </ul>
+</div>

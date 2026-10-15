@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="오파스넷 Splunk 및 Confluent 솔루션 소개">
+    <title>데이터사업 | OPASNET</title>
+    <link rel="stylesheet" href="css/solution-splunk-confluent.css?v=20260918-2">
+    <style>
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; background: #fff; color: #151a2d; font-family: "Noto Sans KR", "Malgun Gothic", Arial, sans-serif; }
+        button { font: inherit; }
+        .opas-preview-header { height: 94px; padding: 0 max(5vw, 28px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ececec; background: #fff; }
+        .opas-preview-brand { color: #111827; font-size: 26px; font-weight: 900; letter-spacing: .13em; text-decoration: none; }
+        .opas-preview-brand span { color: #0057ff; }
+        .opas-preview-note { margin: 0; color: #666; font-size: 14px; }
+        .opas-business-visual { height: 401px; display: grid; place-items: center; padding: 40px 20px; background: #eee url("images/common/sub_visual2.jpg") center / cover no-repeat; color: #fff; text-align: center; }
+        .opas-business-visual h1 { margin: 0; font-size: clamp(42px, 5vw, 64px); letter-spacing: -.04em; }
+        .opas-business-visual p { margin: 18px 0 0; font-size: clamp(16px, 2vw, 22px); font-weight: 500; }
+        .opas-business-shell { min-height: 1200px; padding-bottom: 1px; background: url("images/sub/bg_sub.png") center top repeat-y; }
+        .opas-business-menu { display: grid; grid-template-columns: repeat(6, minmax(130px, 1fr)); max-width: 1180px; margin: 0 auto; background: #222; }
+        .opas-business-menu a { min-height: 60px; display: grid; place-items: center; padding: 10px 12px; border-right: 1px solid #444; color: #fff; text-align: center; text-decoration: none; font-size: 14px; font-weight: 600; }
+        .opas-business-menu a:nth-child(6n) { border-right: 0; }
+        .opas-business-menu a:hover, .opas-business-menu a:focus-visible, .opas-business-menu a.is-active { background: #d81a22; }
+        .opas-product-tabs { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); background: #fff; border: 1px solid #e5e5e5; border-top: 0; }
+        .opas-product-tabs button { min-height: 78px; border: 0; border-right: 1px solid #e5e5e5; background: #fff; color: #666; cursor: pointer; font-size: 17px; font-weight: 700; }
+        .opas-product-tabs button:last-child { border-right: 0; }
+        .opas-product-tabs button[aria-selected="true"] { color: #d81a22; box-shadow: inset 0 -4px #d81a22; }
+        .opas-preview-wrap { width: min(1280px, calc(100% - 40px)); margin: 0 auto; }
+        .opas-sc-page-title { padding: 62px 0 32px; text-align: center; }
+        .opas-sc-page-title h2 { margin: 0; font-size: clamp(34px, 4vw, 48px); }
+        [data-product-panel][hidden] { display: none !important; }
+        @media (max-width: 900px) {
+            .opas-business-menu { grid-template-columns: repeat(3, 1fr); }
+            .opas-business-menu a:nth-child(3n) { border-right: 0; }
+        }
+        @media (max-width: 600px) {
+            .opas-preview-header { height: 70px; padding: 0 20px; }
+            .opas-preview-note { display: none; }
+            .opas-business-visual { height: 270px; }
+            .opas-business-menu { grid-template-columns: repeat(2, 1fr); }
+            .opas-business-menu a:nth-child(3n) { border-right: 1px solid #444; }
+            .opas-business-menu a:nth-child(2n) { border-right: 0; }
+            .opas-product-tabs button { min-height: 64px; }
+            .opas-preview-wrap { width: min(100% - 24px, 1280px); }
+        }
+    </style>
+</head>
+<body>
+<header class="opas-preview-header">
+    <a class="opas-preview-brand" href="#contentArea">OPAS<span>NET</span></a>
+    <p class="opas-preview-note">융합소프트웨어 &amp; IT 솔루션 전문기업</p>
+</header>
+<section class="opas-business-visual" aria-labelledby="business-title">
+    <div>
+        <h1 id="business-title">사업소개</h1>
+        <p>융합소프트웨어 &amp; IT 솔루션 전문기업 오파스넷</p>
+    </div>
+</section>
+
+<div class="opas-business-shell">
+    <nav class="opas-business-menu" aria-label="솔루션 사업 메뉴">
+        <a href="http://opasnet.co.kr/sub/sub02_03_01.php">Software Defined Network</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_02.php">데이터분석</a>
+        <a class="is-active" href="#contentArea" aria-current="page">데이터사업</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_03.php">보안</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_04.php">클라우드/인프라/서비스</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_09.php">클라우드 플랫폼</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_05.php">빅데이터/보안</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_06.php">가상화</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_07.php">비즈니스협업ㆍ화상회의</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_08.php">IoT</a>
+        <a href="http://opasnet.co.kr/sub/sub02_03_10.php">4G/5G Mobile Core</a>
+    </nav>
+
+    <div class="opas-product-tabs" role="tablist" aria-label="데이터사업 제품 선택">
+        <button id="tab-confluent" type="button" role="tab" aria-selected="true" aria-controls="confluent-section" data-product-tab="confluent">Confluent</button>
+        <button id="tab-splunk" type="button" role="tab" aria-selected="false" aria-controls="splunk-section" data-product-tab="splunk">Splunk</button>
+    </div>
+
+    <div class="opas-preview-wrap">
+        <div class="sub-title opas-sc-page-title">
+            <h2 id="product-page-title">Confluent</h2>
+        </div>
+
+<main class="real-cont opas-sc" id="contentArea">
+
+    <section class="opas-sc-product" id="splunk-section" role="tabpanel" aria-labelledby="tab-splunk" data-product-panel="splunk" hidden>
+        <header class="opas-sc-product-head">
+            <p class="opas-sc-kicker">SECURITY · OBSERVABILITY · DATA ANALYTICS</p>
+            <h2 class="opas-sc-sr-only" id="splunk-title">Splunk</h2>
+            <p class="opas-sc-lead opas-sc-bracket-lead">흩어진 데이터에서, 문제를 해결할 단서까지</p>
+        </header>
+        <div class="opas-sc-intro">
+            <p>Splunk는 로그와 이벤트 등 머신 데이터를 검색·분석하고,<br>보안 위협 탐지와 IT 서비스의 상태·성능 파악에 활용하는 데이터 플랫폼 및 솔루션 제품군입니다.</p>
+            <p>서로 다른 시스템의 데이터를 연결해 “무슨 일이 발생했는가”를 확인하고,<br>“왜 발생했는가, 무엇부터 대응해야 하는가”를 조사할 수 있도록 돕습니다.</p>
+            <a class="opas-sc-source" href="https://www.splunk.com/en_us/products/platform.html" target="_blank" rel="noopener noreferrer">Splunk Platform 공식 소개 ↗</a>
+        </div>
+        <nav class="splunk-jump" aria-label="Splunk 내용 바로가기">
+            <a href="#splunk-overview">어떤 솔루션인가</a><a href="#splunk-why">왜 Splunk인가</a><a href="#splunk-advantages">비교 시 강점</a><a href="#splunk-architecture">구성 및 활용</a>
+        </nav>
+
+        <section class="opas-sc-block" id="splunk-overview" aria-labelledby="splunk-overview-title">
+            <div class="opas-sc-section-title"><span>WHAT IS SPLUNK</span><h3 id="splunk-overview-title">분석의 기반부터 보안과 서비스 운영까지</h3></div>
+            <div class="splunk-product-grid">
+                <article class="splunk-product-card"><span class="splunk-card-label">01 / DATA PLATFORM</span><h4>Splunk Platform</h4><p class="splunk-card-subtitle">데이터를 검색 가능한 운영 정보로</p><p>다양한 소스의 데이터를 수집하고 검색·분석·시각화합니다. SPL 검색과 대시보드, 알림으로 조직에 필요한 정보를 확인합니다.</p><div class="splunk-card-foot">직접 운영하는 <b>Splunk Enterprise</b><br>SaaS 방식의 <b>Splunk Cloud Platform</b></div><a class="opas-sc-source" href="https://www.splunk.com/en_us/products/splunk-enterprise.html" target="_blank" rel="noopener noreferrer">플랫폼 기능 확인 ↗</a></article>
+                <article class="splunk-product-card"><span class="splunk-card-label">02 / SECURITY</span><h4>Enterprise Security</h4><p class="splunk-card-subtitle">탐지·조사·대응을 연결하는 보안 운영</p><p>보안 데이터를 분석하는 SIEM을 중심으로 위협을 탐지하고 조사합니다. 자산·사용자의 위험도와 관련 활동을 함께 검토해 대응 우선순위를 정할 수 있습니다.</p><div class="splunk-card-foot">보안 이벤트 상관분석<br>위험도 기반 탐지 및 대응 워크플로</div><a class="opas-sc-source" href="https://www.splunk.com/en_us/products/splunk-enterprise-security-features.html" target="_blank" rel="noopener noreferrer">보안 기능 확인 ↗</a></article>
+                <article class="splunk-product-card"><span class="splunk-card-label">03 / OBSERVABILITY</span><h4>Observability Cloud</h4><p class="splunk-card-subtitle">서비스 장애의 원인과 영향을 파악</p><p>인프라 지표, 애플리케이션 트레이스와 관련 로그를 연결해 성능 문제를 조사합니다. OpenTelemetry 기반 수집으로 클라우드와 분산 서비스의 가시성을 확보합니다.</p><div class="splunk-card-foot">인프라 모니터링 · APM<br>메트릭·트레이스·로그를 통한 조사</div><a class="opas-sc-source" href="https://www.splunk.com/en_us/solutions/opentelemetry.html" target="_blank" rel="noopener noreferrer">관측성·OpenTelemetry 확인 ↗</a></article>
+            </div>
+            <p class="splunk-note">각 제품의 역할을 구분한 개요입니다. 보안·관측성 기능의 제공 범위와 라이선스, 연동 구성은 선택한 제품 및 계약에 따라 달라집니다.</p>
+        </section>
+
+        <section class="opas-sc-block splunk-why" id="splunk-why" aria-labelledby="splunk-why-title">
+            <div class="opas-sc-section-title"><span>WHY SPLUNK</span><h3 id="splunk-why-title">데이터는 많은데, 판단이 늦어지고 있다면</h3><p>수집한 데이터를 실제 조사와 대응에 활용해야 할 때 Splunk의 가치가 커집니다.</p></div>
+            <div class="splunk-reasons">
+                <article><b>01</b><div><h4>시스템마다 로그를 따로 찾고 있다면</h4><p>보안·네트워크·애플리케이션 데이터를 함께 검색하고 연관성을 분석합니다. 여러 시스템을 오가며 단서를 수작업으로 맞추는 부담을 줄일 수 있습니다.</p><a class="opas-sc-source" href="https://www.splunk.com/en_us/products/platform.html" target="_blank" rel="noopener noreferrer">통합 데이터 분석 근거 ↗</a></div></article>
+                <article><b>02</b><div><h4>알림은 많은데 중요한 위협을 놓친다면</h4><p>Enterprise Security의 위험도 기반 분석으로 사용자·자산에 관련된 신호를 함께 평가합니다. 개별 알림뿐 아니라 맥락과 위험 수준을 보고 조사 대상을 정합니다.</p><a class="opas-sc-source" href="https://help.splunk.com/en/splunk-enterprise-security-7/risk-based-alerting/7.3/introduction/about-risk-based-alerting-in-splunk-enterprise-security" target="_blank" rel="noopener noreferrer">위험도 기반 알림 공식 문서 ↗</a></div></article>
+                <article><b>03</b><div><h4>장애를 알아도 원인을 찾는 데 오래 걸린다면</h4><p>Observability의 메트릭·트레이스·로그를 활용해 서비스 성능 저하와 관련된 단서를 연결합니다. 분산된 서비스에서 문제 구간과 원인을 좁히는 데 도움이 됩니다.</p><a class="opas-sc-source" href="https://www.splunk.com/en_us/solutions/opentelemetry.html" target="_blank" rel="noopener noreferrer">장애 조사 워크플로 근거 ↗</a></div></article>
+            </div>
+        </section>
+
+        <section class="opas-sc-block" id="splunk-advantages" aria-labelledby="splunk-advantages-title">
+            <div class="opas-sc-section-title"><span>THE SPLUNK ADVANTAGE</span><h3 id="splunk-advantages-title">다른 솔루션과 비교할 때 주목할 네 가지 강점</h3><p>기능 개수보다, 우리 조직의 조사·분석·운영 요구를 얼마나 연결하는지 살펴보세요.</p></div>
+            <div class="splunk-comparison-wrap" tabindex="0" role="region" aria-label="Splunk 솔루션 비교 기준 표. 작은 화면에서는 좌우로 스크롤할 수 있습니다.">
+                <table class="splunk-comparison"><caption class="opas-sc-sr-only">솔루션 유형별 비교 관점과 Splunk의 강점</caption><thead><tr><th scope="col">비교할 대안</th><th scope="col">선택할 때 확인할 점</th><th scope="col">Splunk에서 주목할 강점</th></tr></thead><tbody>
+                <tr><th scope="row">로그 수집·보관 중심 도구</th><td>보관 이후에도 다양한 소스를 함께 검색하고 업무별 분석을 만들 수 있는가?</td><td><strong>검색에서 분석·시각화까지</strong>SPL과 대시보드로 데이터를 반복 활용하고, 서로 다른 소스의 이벤트를 연결해 조사합니다. <a href="https://www.splunk.com/en_us/products/splunk-enterprise-features.html" target="_blank" rel="noopener noreferrer">[1]</a></td></tr>
+                <tr><th scope="row">SIEM·보안 분석 솔루션</th><td>위험의 맥락을 반영해 탐지·조사·대응의 우선순위를 정할 수 있는가?</td><td><strong>사용자·자산 중심의 위험 분석</strong>Enterprise Security는 위험도, 연관 활동과 조사 워크플로를 연결합니다. 보안팀이 중요한 신호에 집중하도록 돕습니다. <a href="https://www.splunk.com/en_us/products/splunk-enterprise-security-features.html" target="_blank" rel="noopener noreferrer">[2]</a></td></tr>
+                <tr><th scope="row">APM·인프라 모니터링 솔루션</th><td>개방형 수집 표준을 지원하며, 여러 관측 데이터를 연결해 원인을 조사할 수 있는가?</td><td><strong>OpenTelemetry 기반 관측성</strong>지원되는 Collector 배포판과 계측 기능을 활용하고, 메트릭·트레이스·로그의 맥락을 연결해 문제를 조사합니다. <a href="https://www.splunk.com/en_us/solutions/opentelemetry.html" target="_blank" rel="noopener noreferrer">[3]</a></td></tr>
+                <tr><th scope="row">직접 조합·개발하는 분석 환경</th><td>데이터 연동과 기능 확장에 필요한 개발·유지보수 부담을 어떻게 관리할 것인가?</td><td><strong>앱·애드온 생태계 활용</strong>Splunkbase에서 데이터 입력, 분석 화면과 제품 연동을 위한 앱·애드온을 찾아 확장할 수 있습니다. <a href="https://splunkbase.splunk.com/" target="_blank" rel="noopener noreferrer">[4]</a></td></tr>
+                </tbody></table>
+            </div>
+            <p class="splunk-note">Splunk 공식 기능을 바탕으로 정리한 선택 기준이며, 특정 경쟁 제품에 해당 기능이 없다는 의미는 아닙니다. 비용·성능·운영 적합성은 데이터량, 보관 기간, 검색 부하와 구성에 따라 비교해야 합니다. 앱의 지원 주체와 호환 버전도 확인하세요.</p>
+        </section>
+
+        <section class="opas-sc-block" id="splunk-architecture" aria-labelledby="splunk-architecture-title">
+            <div class="opas-sc-section-title"><span>ARCHITECTURE</span><h3 id="splunk-architecture-title">데이터를 모으고, 검색하고, 업무에 활용합니다</h3><p>Splunk Enterprise의 분산 배포를 설명하는 개념 구성입니다.</p></div>
+            <div class="opas-sc-flow opas-sc-flow-splunk" role="img" aria-label="데이터 소스에서 수집 계층, 인덱서, 검색 헤드, 검색 및 분석 활용으로 이어지는 Splunk Enterprise 개념 구성">
+                <div class="opas-sc-flow-node"><strong>데이터 소스</strong><span>서버 · 애플리케이션<br>네트워크 · 보안 · 클라우드</span></div><span class="opas-sc-flow-arrow" aria-hidden="true">→</span>
+                <div class="opas-sc-flow-node opas-sc-flow-node-red"><strong>데이터 수집</strong><span>Forwarder · HEC<br>지원 앱 · 애드온</span></div><span class="opas-sc-flow-arrow" aria-hidden="true">→</span>
+                <div class="opas-sc-flow-node opas-sc-flow-node-blue"><strong>Indexer</strong><span>인덱싱 · 저장<br>데이터 검색 수행</span></div><span class="opas-sc-flow-arrow" aria-hidden="true">↔</span>
+                <div class="opas-sc-flow-node opas-sc-flow-node-green"><strong>Search Head</strong><span>분산 검색 조정<br>결과 통합 · 시각화</span></div><span class="opas-sc-flow-arrow" aria-hidden="true">→</span>
+                <div class="opas-sc-flow-node"><strong>분석과 활용</strong><span>검색 · 대시보드 · 알림<br>운영 분석 · 보안 조사</span></div>
+            </div>
+            <div class="opas-sc-control"><strong>규모에 맞춘 확장</strong><span>수집·인덱싱·검색 역할을 분리하고, 필요에 따라 클러스터링으로 가용성과 처리 규모를 설계합니다.</span></div>
+            <p class="splunk-note">Observability Cloud는 위 인덱서 구성과 별도의 서비스입니다. 제품 간 연동 방식은 수집할 데이터와 도입 범위에 맞춰 설계합니다.</p>
+            <a class="opas-sc-source" href="https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/9.1/hardware-capacity-planning/components-of-a-splunk-enterprise-deployment" target="_blank" rel="noopener noreferrer">Splunk Enterprise 구성 요소 공식 문서 ↗</a>
+        </section>
+
+        <section class="opas-sc-block" aria-labelledby="splunk-use-title">
+            <div class="opas-sc-section-title"><span>USE CASES</span><h3 id="splunk-use-title">먼저 해결할 업무부터 시작하세요</h3></div>
+            <ol class="opas-sc-capabilities splunk-use-cards">
+                <li><b>SECURITY</b><strong>보안 위협 탐지·조사</strong><span>인증·보안·클라우드 이벤트의 연관 활동을 분석하고 위험도에 따라 조사 우선순위를 결정합니다.</span></li>
+                <li><b>IT OPERATIONS</b><strong>장애 원인 분석</strong><span>서비스 지표와 요청 경로, 관련 로그를 활용해 성능 저하 구간과 원인 후보를 좁힙니다.</span></li>
+                <li><b>DATA ANALYTICS</b><strong>운영 현황과 리포트</strong><span>조직의 운영 데이터를 검색·집계하고 담당자별 대시보드와 알림으로 반복 업무를 지원합니다.</span></li>
+            </ol>
+        </section>
+        <aside class="splunk-official" aria-labelledby="splunk-sources-title"><div><span class="splunk-card-label">OFFICIAL RESOURCES</span><h3 id="splunk-sources-title">Splunk 공식 자료로 더 자세히 확인하세요</h3><p>공식 제품 소개와 기술 문서를 요약·재구성했습니다. 확인일: 2026.09.18</p></div><div class="splunk-source-links"><a href="https://www.splunk.com/en_us/products/platform.html" target="_blank" rel="noopener noreferrer">Platform ↗</a><a href="https://www.splunk.com/en_us/products/splunk-enterprise-security-features.html" target="_blank" rel="noopener noreferrer">Enterprise Security ↗</a><a href="https://www.splunk.com/en_us/solutions/opentelemetry.html" target="_blank" rel="noopener noreferrer">OpenTelemetry ↗</a><a href="https://splunkbase.splunk.com/" target="_blank" rel="noopener noreferrer">Splunkbase ↗</a></div></aside>
+    </section>
+
+
+    <section class="opas-sc-product opas-sc-confluent-section" id="confluent-section" role="tabpanel" aria-labelledby="tab-confluent confluent-title" data-product-panel="confluent">
+        <header class="opas-sc-product-head">
+            <h2 class="opas-sc-sr-only" id="confluent-title">Confluent</h2>
+            <p class="opas-sc-lead opas-sc-bracket-lead">신뢰할 수 있는 실시간 데이터 제품을 만드는 데이터 스트리밍 플랫폼</p>
+        </header>
+
+        <div class="opas-sc-intro">
+            <p>Confluent는 모든 데이터를 연결해 신뢰할 수 있고 재사용 가능한 실시간 데이터 제품으로 전환합니다.</p>
+            <p>Apache Kafka® 기반 스트리밍으로 이벤트를 발생 즉시 포착하고 원하는 곳에 지속적으로 전달합니다.</p>
+            <p>150개 이상의 사전 구축 커넥터가 레거시·클라우드·SaaS 시스템을 코드 부담 없이 연결합니다.</p>
+            <p>Apache Flink®는 도착하는 데이터를 변환·결합·분석해 즉시 활용 가능한 맥락을 만듭니다.</p>
+            <p>Stream Governance는 스키마·품질·계보·보안을 통합해 데이터 제품의 신뢰성을 높입니다.</p>
+            <p class="opas-sc-emphasis">오파스넷은 아키텍처 설계부터 구축, 마이그레이션, 성능 최적화와 운영을 지원합니다.</p>
+        </div>
+
+        <figure class="opas-sc-architecture" id="confluent-architecture">
+            <div class="opas-sc-section-title">
+                <span>ARCHITECTURE</span>
+                <h3>Data Mesh에서 Data Products와 실시간 가치로 연결합니다</h3>
+            </div>
+            <div class="opas-sc-flow-visual">
+                <img src="images/sub/splunk-confluent/confluent-data-streaming-flow.png" alt="데이터 소스가 Process, Stream, Govern을 거쳐 데이터 제품과 애플리케이션 및 데이터 시스템으로 연결되는 Confluent 아키텍처">
+                <img class="opas-sc-flow-brand" src="images/sub/splunk-confluent/confluent-logo-mark.png" alt="" aria-hidden="true">
+                <div class="opas-sc-data-motion" aria-hidden="true">
+                    <i style="--lane:32%;--delay:-.3s;--speed:4.8s"></i>
+                    <i style="--lane:39%;--delay:-2.6s;--speed:5.6s"></i>
+                    <i style="--lane:46%;--delay:-1.2s;--speed:4.2s"></i>
+                    <i style="--lane:53%;--delay:-3.8s;--speed:5.2s"></i>
+                    <i style="--lane:60%;--delay:-2.1s;--speed:4.6s"></i>
+                    <i style="--lane:67%;--delay:-4.4s;--speed:5.8s"></i>
+                </div>
+            </div>
+            <figcaption class="opas-sc-architecture-caption">
+                <span><i class="opas-sc-icon opas-sc-icon-db" aria-hidden="true"></i><b>DATA MESH</b><small>소스 · 이벤트</small></span>
+                <span class="opas-sc-caption-arrow" aria-hidden="true">→</span>
+                <span><i class="opas-sc-icon opas-sc-icon-cube" aria-hidden="true"></i><b>DATA PRODUCTS</b><small>재사용 스트림</small></span>
+                <span class="opas-sc-caption-arrow" aria-hidden="true">→</span>
+                <span><i class="opas-sc-icon opas-sc-icon-value" aria-hidden="true">ϟ</i><b>INSTANT VALUE</b><small>앱 · 분석 활용</small></span>
+            </figcaption>
+        </figure>
+
+        <div class="opas-sc-block">
+            <div class="opas-sc-section-title">
+                <span>CAPABILITIES</span>
+                <h3>스트림·연결·처리·관리를 하나의 플랫폼으로 제공합니다</h3>
+            </div>
+            <ol class="opas-sc-capabilities opas-sc-capabilities-purple">
+                <li><b>01</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-stream" aria-hidden="true">≋</i><strong>데이터 스트리밍</strong></div><span>Kafka 기반 고처리량·저지연 스트림으로 이벤트를 안정적으로 저장·공유합니다.</span></li>
+                <li><b>02</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-connect" aria-hidden="true">↔</i><strong>150+ Connectors</strong></div><span>DB·SaaS·레거시·클라우드를 사전 구축 통합으로 빠르게 연결합니다.</span></li>
+                <li><b>03</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-flink" aria-hidden="true">ƒ</i><strong>Apache Flink 처리</strong></div><span>SQL·Python·Java로 데이터를 도착 즉시 필터·조인·집계합니다.</span></li>
+                <li><b>04</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-govern" aria-hidden="true">✓</i><strong>Stream Governance</strong></div><span>스키마·계약·품질·계보를 소스에서 적용해 신뢰할 수 있게 관리합니다.</span></li>
+                <li><b>05</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-table" aria-hidden="true">▰</i><strong>Tableflow</strong></div><span>Kafka Topic을 Iceberg·Delta Lake 테이블로 전환해 분석·AI에서 활용합니다.</span></li>
+                <li><b>06</b><div class="opas-sc-capability-title"><i class="opas-sc-component-icon opas-sc-component-cloud" aria-hidden="true">☁</i><strong>유연한 배포</strong></div><span>Cloud·Platform·Private Cloud로 클라우드와 온프레미스 전반에 배포합니다.</span></li>
+            </ol>
+        </div>
+
+        <div class="opas-sc-use-table" id="use-cases" aria-label="Confluent 대표 활용 사례">
+            <div class="opas-sc-use-row opas-sc-use-head"><span>USE CASE</span><span>업무 영역</span><span>적용 흐름</span><span>기대 효과</span></div>
+            <div class="opas-sc-use-row"><b>01</b><strong>이벤트 기반 앱·에이전트</strong><span>비즈니스 이벤트 → Kafka → 마이크로서비스·에이전트</span><em>복원력 높은 실시간 서비스</em></div>
+            <div class="opas-sc-use-row"><b>02</b><strong>AI를 위한 실시간 데이터</strong><span>운영 데이터 → 관리된 스트림 → RAG·AI 에이전트</span><em>최신 맥락 기반 AI</em></div>
+            <div class="opas-sc-use-row"><b>03</b><strong>Shift-Left·CDC</strong><span>DB 변경 → Connector·Flink 정제 → Lakehouse</span><em>지연·품질 문제 사전 차단</em></div>
+            <div class="opas-sc-use-row"><b>04</b><strong>하이브리드·IoT 통합</strong><span>Edge·IoT → 중앙 스트리밍 허브 → 클라우드 앱</span><em>현장과 클라우드 실시간 연결</em></div>
+        </div>
+    </section>
+
+    <section class="opas-sc-story" id="customer-story" aria-labelledby="customer-story-title" data-product-panel="confluent">
+        <div class="opas-sc-story-heading">
+            <p class="opas-sc-kicker">CUSTOMER STORY · NOTION</p>
+            <h2 id="customer-story-title">1억+ 사용자 규모의 AI·분석·통합을 지원합니다</h2>
+            <p>Notion은 Confluent Cloud를 실시간 이벤트 로깅과 Notion AI의 데이터 백본으로 활용합니다.</p>
+        </div>
+        <div class="opas-sc-story-metrics">
+            <div><strong>100M+</strong><span>사용자 실시간 메시지 처리</span></div>
+            <div><strong>REAL-TIME RAG</strong><span>앱 변경을 Vector DB에 즉시 동기화</span></div>
+            <div><strong>3×</strong><span>보고된 개발 생산성 향상</span></div>
+        </div>
+        <div class="opas-sc-story-flow" aria-label="Notion 고객 사례 적용 흐름">
+            <span>앱 변경 이벤트</span><i>→</i><span>Confluent Cloud</span><i>→</i><span>Vector DB · S3 · Snowflake</span><i>→</i><span>AI · 분석 · 통합</span>
+        </div>
+        <a class="opas-sc-source" href="https://www.confluent.io/customers/notion/" target="_blank" rel="noopener noreferrer">Confluent 공식 Notion 고객 사례 보기</a>
+    </section>
+
+    <div class="opas-sc-sources" aria-label="출처">
+        <span>Sources</span>
+        <a href="https://www.splunk.com/en_us/products.html" target="_blank" rel="noopener noreferrer">Splunk Products</a>
+        <a href="https://www.confluent.io/ko-kr/data-streaming/" target="_blank" rel="noopener noreferrer">Confluent Data Streaming</a>
+        <a href="https://www.confluent.io/customers/notion/" target="_blank" rel="noopener noreferrer">Notion Customer Story</a>
+    </div>
+</main>
+</div>
+</div>
+<script>
+    (() => {
+        const tabs = [...document.querySelectorAll('[data-product-tab]')];
+        const panels = [...document.querySelectorAll('[data-product-panel]')];
+        const pageTitle = document.getElementById('product-page-title');
+
+        function selectProduct(product, moveFocus = false) {
+            tabs.forEach((tab) => {
+                const active = tab.dataset.productTab === product;
+                tab.setAttribute('aria-selected', String(active));
+                tab.tabIndex = active ? 0 : -1;
+                if (active && moveFocus) tab.focus();
+            });
+            panels.forEach((panel) => {
+                panel.hidden = panel.dataset.productPanel !== product;
+            });
+            pageTitle.textContent = product === 'confluent' ? 'Confluent' : 'Splunk';
+            document.title = `${pageTitle.textContent} | 데이터사업 | OPASNET`;
+        }
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => selectProduct(tab.dataset.productTab));
+            tab.addEventListener('keydown', (event) => {
+                if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+                event.preventDefault();
+                const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+                selectProduct(tabs[next].dataset.productTab, true);
+            });
+        });
+
+        function selectFromHash() {
+            const hash = location.hash;
+            const product = hash.startsWith('#splunk') ? 'splunk' : 'confluent';
+            selectProduct(product);
+            if (hash) requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
+        }
+        window.addEventListener('hashchange', () => {
+            if (/^#(splunk|confluent)/.test(location.hash)) selectFromHash();
+        });
+        selectFromHash();
+    })();
+</script>
+</body>
+</html>
+
